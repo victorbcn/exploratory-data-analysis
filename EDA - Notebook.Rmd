@@ -1,0 +1,169 @@
+---
+title: "Exploratory Data Analysis"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+
+### Base Plotting Functions
+
+- `plot`: scatterplot or other kind of plot depending on the class of the object being plotted
+- `lines`: Adds lines to an existing plot
+- `points`: Adds points to an existing plot
+- `text`: Add text labels to a plot using `x,y` coordinates
+- `title`: Adds annotations to axis, titles, subtitles or outer margin
+- `mtext`: Adds text to the margins
+- `axis`: Adds axis ticks or labels
+
+
+### Base Plot with an Annotation
+
+
+```{r}
+library(datasets)
+with(airquality, plot(Wind,Ozone))
+title(main="Ozone and Wind in New York City")
+```
+
+
+```{r}
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City"))
+with(subset(airquality, Month==5), points(Wind, Ozone, col = "blue"))
+```
+
+```{r}
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", type="n"))
+with(subset(airquality, Month==5), points(Wind, Ozone, col = "blue"))
+with(subset(airquality, Month!=5), points(Wind, Ozone, col = "red"))
+legend("topright", pch=1, col = c("blue", "red"), legend = c("May", "Other Months"))
+```
+
+
+### Base Plot with Regression Line
+
+```{r}
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", pch = 20))
+model <- lm(Ozone ~ Wind, airquality)
+abline(model, lwd = 2)
+```
+
+
+### Multiple Base Plots
+
+```{r}
+par(mfrow = c(1,2))
+with(airquality, {
+    plot(Wind, Ozone, main = "Ozone and Wind")
+    plot(Solar.R, Ozone, main = "Ozone and Solar Radiation")
+})
+```
+
+```{r}
+par(mfrow = c(1,3), mar=c(4,4,2,1), oma = c(0,0,2,0))
+with(airquality, {
+    plot(Wind, Ozone, main = "Ozone and Wind")
+    plot(Solar.R, Ozone, main = "Ozone and Solar Radiation")
+    plot(Temp, Ozone, main = "Ozone and Temperature")
+    mtext("Ozone and Weather in New York City", outer = TRUE)
+})
+```
+
+## Base Plotting Demonstrations
+
+```{r}
+x <- rnorm(100)
+hist(x)
+y <- rnorm(100)
+plot(x,y, pch = 6)
+fit <- lm(y ~ x)
+abline(fit, lwd = 3, col = "red")
+
+```
+ 
+ 
+ 
+ 
+```{r}
+x <- rnorm(100)
+y <- x + rnorm(100)
+g <- gl(2,50)
+g <- gl(2, 50, labels = c("Male", "Female"))
+str(g)
+plot(x, y, type = "n") # Make the plot but do not put any data in there
+points(x[g == "Male"], y[g == "Male"], col = "green")
+points(x[g == "Female"], y[g == "Female"], col = "red")
+```
+
+
+## Graphic Devices on R
+
+### How to create a Plot
+
+```{r}
+library(datasets)
+with(faithful, plot(eruptions, waiting))
+tile(main = "Old Faithful Geyser Data")
+```
+
+Second approach for file devices:
+
+
+```{r}
+pdf(file="example.pdf")
+with(faithful, plot(eruptions,waiting))
+title(main="Old Faithful Geysers data")
+dev.off()
+```
+
+### Graphics File devies
+
+
+Vector formats:
+
+* `pdf`
+
+* `svg`: XML-based scalable vector graphics.
+
+* `win.metafile`: Windows Metafile (only for Windows)
+
+* `postscript`
+
+### Copying Plots
+
+* `dev.copy`
+
+* `dev.copy2pdf`: copy a plot to a PDF file
+
+```{r}
+library(datasets)
+with(faithful, plot(eruptions, waiting))
+title(main = "Old Faithful Geyser Data")
+dev.copy(png, file = "geyserplot.png")
+dev.off()
+```
+
+
+
+
+## Week 1 Quiz
+
+1. Which of the following is a principle of analytic graphics? X Don't plot more than two variables at a time
+
+2. What is the role of exploratory graphs in data analysis? Personal Understanding
+
+3. Which of the following is true about the base plotting system? Plots are created and annotated with separate functions
+
+4. Which of the following is an example of a valid graphics device in R? PNG 
+
+5. Which of the following is an example of a vector graphics device in R? SVG
+
+6. Bitmapped file formats can be most useful for Scatterplots with many many points
+
+7. Which of the following functions is typically used to add elements to a plot in the base graphics system? X plot()
+
+8. Which function opens the screen graphics device for the Mac? Quartz()
+
+9. What does the 'pch' option to par() control? the plotting symbol/character in the base graphics system
+
+10. If I want to save a plot to a PDF file, which of the following is a correct way of doing that? Construct the plot on the screen device and then copy it to a PDF file with dev.copy2pdf()
