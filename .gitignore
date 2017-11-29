@@ -31,3 +31,9 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+.Rproj.user
+
+
+# Week 1 data
+week1/data
+week1/ExData_Plotting1
