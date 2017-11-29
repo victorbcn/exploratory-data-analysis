@@ -1,0 +1,102 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Week 2 Quiz
+
+## Question 1
+
+```{r}
+library(lattice)
+g <- bwplot(hwy ~ displ, mpg)
+#summary(mpg)
+class(g)
+```
+
+## Question 2
+
+```{r}
+library(nlme)
+library(lattice)
+xyplot(weight ~ Time | Diet, BodyWeight)
+```
+
+Weight vs time for each diet.
+
+## Question 3
+
+```{r}
+```
+
+
+llines? CORRECT
+lpoints?
+
+annotate panels: 
+
+text:The text() function is used to annotate plots created with the base plotting system. wrong!
+
+## Question 4
+
+```{r}
+library(lattice)
+library(datasets)
+data(airquality)
+p <- xyplot(Ozone ~ Wind | factor(Month), data = airquality)
+p
+```
+
+## Question 5
+
+splom WRONG!
+print.trellis() wrong
+trellis.par.set() CORRECT
+
+## Question 6
+
+Grammar of Graphics
+
+## Question 7
+
+I am interested in examining how the relationship between ozone and wind speed varies across each month. What would be the appropriate code to visualize that using ggplot2? 
+
+-- Use the one with transform ---
+
+```{r}
+library(datasets)
+data(airquality)
+airquality = transform(airquality, Month = factor(Month))
+qplot(Wind, Ozone, data = airquality, facets = . ~ Month)
+```
+
+
+vs
+
+```{r}
+qplot(Wind, Ozone, data = airquality, facets = . ~ factor(Month))
+```
+
+## Question 8
+
+plloting object
+
+## Question 9
+
+```{r}
+library(ggplot2)
+library(ggplot2movies)
+g <- ggplot(movies, aes(votes, rating))
+g+geom_point()
+```
+
+what type of layer?
+
+
+## Question 10
+
+```{r}
+qplot(votes, rating, data = movies)
+qplot(votes, rating, data = movies) + geom_smooth()
+```
+
